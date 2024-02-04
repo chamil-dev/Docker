@@ -5,12 +5,22 @@ services:
     container_name: nexus
     image: sonatype/nexus3:latest
     ports:
-      - "8081:8081"
+      - "8181:8081"
+    networks:
+      nexusnet:
+        ipv4_address: 172.160.0.2  # Assign a specific IPv4 address to Nexus
     volumes:
       - nexus_data:/nexus-data
     environment:
       - INSTALL4J_ADD_VM_PARAMS=-Xms2g -Xmx2g -XX:MaxDirectMemorySize=3g -Djava.util.prefs.userRoot=/nexus-data
     restart: always
+
+networks:
+  nexusnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.160.0.0/16
 
 volumes:
   nexus_data:
