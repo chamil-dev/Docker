@@ -9,6 +9,16 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=admin
     volumes:
       - grafana-data:/var/lib/grafana
+    networks:
+      grafana-net:
+        ipv4_address: 172.161.0.2
+
+networks:
+  grafana-net:
+    ipam:
+      config:
+        - subnet: 172.161.0.0/16
+          gateway: 172.161.0.1
 
 volumes:
   grafana-data:
